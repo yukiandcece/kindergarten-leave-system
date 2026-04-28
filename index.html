@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>家园智慧驿站 - 登录</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="page">
+    <section class="card">
+      <header class="hero">
+        <div class="hero-top">
+          <h1>家园智慧驿站</h1>
+          <div class="logo-dot"></div>
+        </div>
+        <div class="hero-image" role="img" aria-label="幼儿园儿童快乐学习场景">
+        </div>
+      </header>
+
+      <section class="login-section">
+        <h2>手机号登录</h2>
+        <p class="desc">请选择登录终端，并使用园所预留手机号登录系统</p>
+
+        <div class="terminal-tabs" role="tablist" aria-label="选择登录终端">
+          <button class="tab tab-active" type="button" data-terminal-label="入园考勤拍摄端" data-target="entry-shoot" role="tab" aria-selected="true">入园考勤拍摄端</button>
+          <button class="tab" type="button" data-terminal-label="入园考勤确认端" data-target="entry-confirm" role="tab" aria-selected="false">入园考勤确认端</button>
+          <button class="tab" type="button" data-terminal-label="离园考勤确认端" data-target="leave-detail.html" role="tab" aria-selected="false">离园考勤确认端</button>
+          <div class="terminal-empty" aria-hidden="true"></div>
+        </div>
+
+        <form class="login-form" aria-label="登录表单" novalidate>
+          <label for="phone">手机号 <span aria-hidden="true">*</span><span class="sr-only">（必填）</span></label>
+          <div class="input-with-icon">
+            <i class="icon" aria-hidden="true">📱</i>
+            <input id="phone" type="tel" inputmode="numeric" maxlength="11" placeholder="请输入园所预留手机号" aria-required="true" aria-invalid="false" aria-describedby="phone-hint phone-error">
+          </div>
+          <span id="phone-hint" class="sr-only">请输入11位手机号码</span>
+          <span id="phone-error" class="error-message" role="alert" aria-live="assertive"></span>
+
+          <label for="code">验证码 <span aria-hidden="true">*</span><span class="sr-only">（必填）</span></label>
+          <div class="code-row">
+            <div class="input-with-icon">
+              <i class="icon" aria-hidden="true">🔒</i>
+              <input id="code" type="text" inputmode="numeric" maxlength="4" placeholder="请输入4位数字验证码" aria-required="true" aria-invalid="false" aria-describedby="code-hint code-error">
+            </div>
+            <button id="getCodeBtn" class="get-code-btn" type="button" aria-label="获取验证码">获取验证码</button>
+          </div>
+          <span id="code-hint" class="sr-only">请输入4位数字验证码</span>
+          <span id="code-error" class="error-message" role="alert" aria-live="assertive"></span>
+
+          <button id="loginBtn" class="login-btn" type="button">立即登录</button>
+        </form>
+
+        <footer class="bottom-row">
+          <span id="currentTerminalText">当前终端：入园考勤拍摄端</span>
+        </footer>
+      </section>
+    </section>
+  </main>
+  <script src="./main.js"></script>
+</body>
+</html>

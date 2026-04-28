@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>离园考勤详情</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="detail-page">
+    <section class="detail-card">
+      <header class="detail-header">
+        <h1>离园考勤详情</h1>
+        <a class="back-home" href="./index.html">返回登录</a>
+      </header>
+
+      <section class="detail-block">
+        <h2>幼儿搜索</h2>
+        <div class="swipe-row">
+          <input id="searchInput" type="text" placeholder="请点击'启动NFC'按钮，可以输入幼儿姓名或电话号码进行搜索..." aria-label="幼儿姓名或电话号码搜索输入">
+          <button id="searchBtn" type="button" class="get-code-btn" aria-label="搜索幼儿">🔍 搜索</button>
+          <button id="startNfcBtn" type="button" class="nfc-start-btn" aria-label="启动NFC扫描">📱 启动NFC</button>
+        </div>
+        <p id="swipeTip" class="swipe-tip" role="status" aria-live="polite"></p>
+      </section>
+
+      <!-- 学生选择列表（当电话号码对应多个学生时显示） -->
+      <section class="detail-block" id="studentSelectSection" style="display: none;">
+        <h2>选择学生</h2>
+        <p class="section-desc">该电话号码对应以下学生，请选择：</p>
+        <div id="studentSelectList" class="student-select-list"></div>
+      </section>
+
+      <section class="detail-grid">
+        <article class="detail-block">
+          <h2>待确认接送人</h2>
+          <div id="pickupList" class="pickup-list">
+            <p class="empty-text">请刷NFC，可以输入幼儿姓名或电话号码进行搜索...</p>
+          </div>
+        </article>
+
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <h2>离园记录</h2>
+            <button id="addRecordBtn" type="button" class="add-record-btn">添加离园记录</button>
+          </div>
+          <div class="table-wrap">
+            <table class="record-table" aria-label="离园记录列表">
+              <thead>
+                <tr>
+                  <th scope="col">时间</th>
+                  <th scope="col">幼儿姓名</th>
+                  <th scope="col">家长姓名</th>
+                  <th scope="col">家长角色</th>
+                  <th scope="col">结果</th>
+                </tr>
+              </thead>
+              <tbody id="recordBody">
+                <tr><td colspan="5">暂无离园记录</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="record-pagination" role="navigation" aria-label="分页导航">
+            <button id="prevPageBtn" type="button" class="get-code-btn" aria-label="上一页">上一页</button>
+            <span id="pageInfo" aria-live="polite">第 1 / 1 页</span>
+            <button id="nextPageBtn" type="button" class="get-code-btn" aria-label="下一页">下一页</button>
+            <select id="recordPageSize" class="page-size-select" aria-label="每页显示条数">
+              <option value="5">5条/页</option>
+              <option value="10">10条/页</option>
+              <option value="20">20条/页</option>
+              <option value="50">50条/页</option>
+            </select>
+          </div>
+        </article>
+      </section>
+
+      <section class="detail-block">
+        <div class="abnormal-header">
+          <h2>异常记录</h2>
+        </div>
+        <ul id="abnormalList" class="abnormal-list">
+          <li>暂无异常记录</li>
+        </ul>
+        <div class="record-pagination" role="navigation" aria-label="异常记录分页导航">
+          <button id="abnormalPrevPageBtn" type="button" class="get-code-btn" aria-label="上一页">上一页</button>
+          <span id="abnormalPageInfo" aria-live="polite">第 1 / 1 页</span>
+          <button id="abnormalNextPageBtn" type="button" class="get-code-btn" aria-label="下一页">下一页</button>
+          <select id="abnormalPageSize" class="page-size-select" aria-label="每页显示条数">
+            <option value="5">5条/页</option>
+            <option value="10">10条/页</option>
+            <option value="20">20条/页</option>
+            <option value="50">50条/页</option>
+          </select>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <!-- 接送人卡片操作菜单 -->
+  <div id="cardActionMenu" class="card-action-menu" style="display: none;">
+    <div class="menu-content">
+      <div class="menu-header">
+        <h3>选择操作</h3>
+        <span class="menu-close" onclick="closeCardActionMenu()">&times;</span>
+      </div>
+      <div class="menu-actions">
+        <button id="addNoteBtn" class="menu-action-btn" type="button">
+          <span class="action-icon">📝</span>
+          <span class="action-text">添加备注</span>
+        </button>
+        <button id="callPhoneBtn" class="menu-action-btn" type="button">
+          <span class="action-icon">📞</span>
+          <span class="action-text">拨打电话</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 添加离园记录弹窗 -->
+  <div id="addRecordModal" class="add-record-modal">
+    <div class="add-record-modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="add-record-modal-header">
+        <h3 id="modalTitle">添加离园记录</h3>
+        <span class="add-record-modal-close" onclick="closeAddRecordModal()" role="button" tabindex="0" aria-label="关闭弹窗">&times;</span>
+      </div>
+      <form id="addRecordForm" class="add-record-form" aria-label="添加离园记录表单">
+        <div class="form-group">
+          <label for="recordChild">幼儿</label>
+          <input id="recordChild" type="text" placeholder="刷卡后自动显示，也可手动输入" aria-describedby="recordChildHint">
+          <span id="recordChildHint" class="sr-only">刷卡后自动填充，可手动修改</span>
+        </div>
+        <div class="form-group">
+          <label for="recordParent">家长姓名 <span aria-hidden="true">*</span><span class="sr-only">（必填）</span></label>
+          <input id="recordParent" type="text" placeholder="请输入家长姓名" required aria-required="true">
+        </div>
+        <div class="form-group">
+          <label for="recordRelation">家长角色 <span aria-hidden="true">*</span><span class="sr-only">（必填）</span></label>
+          <select id="recordRelation" required aria-required="true">
+            <option value="">请选择家长角色</option>
+            <option value="爸爸">爸爸</option>
+            <option value="妈妈">妈妈</option>
+            <option value="爷爷">爷爷</option>
+            <option value="奶奶">奶奶</option>
+            <option value="外公">外公</option>
+            <option value="外婆">外婆</option>
+            <option value="其他">其他</option>
+          </select>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="cancel-btn" onclick="closeAddRecordModal()">取消</button>
+          <button type="submit" class="submit-btn">确认添加</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="./nfcDemo/nfc-core.js"></script>
+  <script src="./leave-detail.js"></script>
+  <script>
+    // 关闭卡片操作菜单（全局函数）
+    function closeCardActionMenu() {
+      const menu = document.getElementById('cardActionMenu');
+      if (menu) {
+        menu.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>

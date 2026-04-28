@@ -1,0 +1,21 @@
+{
+  "name": "kindergarten-leave-api",
+  "version": "1.0.0",
+  "description": "幼儿园离园系统API服务",
+  "main": "api-server.js",
+  "scripts": {
+    "start": "node api-server.js",
+    "dev": "nodemon api-server.js"
+  },
+  "keywords": ["api", "mysql", "express"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mysql2": "^3.6.0",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

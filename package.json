@@ -1,0 +1,45 @@
+{
+  "name": "kindergarten-leave-system",
+  "version": "1.0.0",
+  "description": "幼儿园离园考勤管理系统 - 专业版",
+  "main": "src/scripts/modules/login.js",
+  "scripts": {
+    "dev": "live-server --port=8080 --open=/index.html",
+    "build": "echo 'Build process would be configured here'",
+    "lint": "eslint src/**/*.js",
+    "format": "prettier --write \"src/**/*.{js,css,html}\"",
+    "test": "echo 'Tests would be configured here'"
+  },
+  "keywords": [
+    "kindergarten",
+    "attendance",
+    "education",
+    "school-management"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "live-server": "^1.2.2",
+    "prettier": "^3.2.5"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "mysql2": "^3.22.3"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie <= 11"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/kindergarten-leave-system.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/kindergarten-leave-system/issues"
+  },
+  "homepage": "https://github.com/yourusername/kindergarten-leave-system#readme"
+}

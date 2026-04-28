@@ -1,0 +1,153 @@
+/**
+ * CSS 变量系统
+ * 统一管理设计规范
+ */
+
+:root {
+  /* 颜色系统 */
+  /* 主色调 - 青绿色系 */
+  --color-primary: #00d7a8;
+  --color-primary-dark: #00c695;
+  --color-primary-darker: #00c08f;
+  --color-primary-light: #3ce2cc;
+  --color-primary-lighter: #00ccb8;
+
+  /* 辅助色 */
+  --color-secondary: #2f63a2;
+  --color-secondary-dark: #2a5790;
+  --color-secondary-light: #4a7bc4;
+
+  /* 中性色 */
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  /* 灰色系 */
+  --color-gray-50: #f5f7fa;
+  --color-gray-100: #e8ecf2;
+  --color-gray-200: #dbe8f6;
+  --color-gray-300: #c5d3e0;
+  --color-gray-400: #a2afbf;
+  --color-gray-500: #8da1b7;
+  --color-gray-600: #6b7f92;
+  --color-gray-700: #51657a;
+  --color-gray-800: #2d4a62;
+  --color-gray-900: #18253a;
+
+  /* 语义颜色 */
+  --color-success: #1a9c5e;
+  --color-success-light: #e8f5ee;
+  --color-warning: #cc8a00;
+  --color-warning-light: #fff8e8;
+  --color-error: #eb4335;
+  --color-error-light: #ffe9ea;
+  --color-info: #2f63a2;
+  --color-info-light: #edf4ff;
+
+  /* 背景色 */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fbff;
+  --bg-tertiary: #f5f7fa;
+  --bg-gradient: linear-gradient(135deg, #00d0c4, #31d7c5);
+  --bg-gradient-hero: linear-gradient(120deg, #00ccb8, #3ce2cc);
+  --bg-gradient-button: linear-gradient(90deg, #00d7a8, #00c08f);
+
+  /* 边框颜色 */
+  --border-color: #e6eef8;
+  --border-color-dark: #dbe8f6;
+  --border-color-light: #edf3fa;
+
+  /* 文字颜色 */
+  --text-primary: #18253a;
+  --text-secondary: #51657a;
+  --text-tertiary: #6d8196;
+  --text-placeholder: #c5d3e0;
+  --text-disabled: #8fa1b8;
+
+  /* 阴影 */
+  --shadow-sm: 0 2px 8px rgba(0, 67, 78, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 67, 78, 0.12);
+  --shadow-lg: 0 8px 24px rgba(0, 67, 78, 0.15);
+  --shadow-xl: 0 12px 30px rgba(0, 67, 78, 0.25);
+
+  /* 圆角 */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-full: 9999px;
+
+  /* 间距 */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 24px;
+  --spacing-2xl: 32px;
+  --spacing-3xl: 48px;
+
+  /* 字体 */
+  --font-family-base: "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-md: 15px;
+  --font-size-lg: 16px;
+  --font-size-xl: 18px;
+  --font-size-2xl: 20px;
+  --font-size-3xl: 24px;
+  --font-size-4xl: 32px;
+  --font-size-5xl: 40px;
+  --font-size-6xl: 48px;
+  --font-size-7xl: 56px;
+
+  /* 字重 */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* 行高 */
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.4;
+  --line-height-relaxed: 1.6;
+
+  /* 过渡 */
+  --transition-fast: 0.15s;
+  --transition-base: 0.2s;
+  --transition-slow: 0.3s;
+
+  /* 缓动函数 */
+  --ease-in-out: ease-in-out;
+  --ease-out: ease-out;
+  --ease-in: ease-in;
+
+  /* Z-index */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+
+  /* 容器宽度 */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1120px;
+
+  /* 响应式断点 */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+}
+
+/* 暗色主题（可选，为未来扩展预留） */
+@media (prefers-color-scheme: dark) {
+  /* :root {
+  /   --bg-primary: #1a1a1a;
+  /   --text-primary: #ffffff;
+  /   ... 其他暗色主题变量
+  / } */
+}
