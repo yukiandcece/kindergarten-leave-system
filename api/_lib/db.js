@@ -3,18 +3,9 @@ const mysql = require('mysql2/promise');
 const DEFAULT_PORT = 3306;
 const DEFAULT_CHARSET = 'utf8mb4';
 const DEFAULT_CONNECTION_LIMIT = 3;
-
-function getRequiredEnv(name) {
-  const value = process.env[name];
-
-  if (!value) {
-    const error = new Error(`Missing required environment variable: ${name}`);
-    error.statusCode = 500;
-    throw error;
-  }
-
-  return value;
-}
+const DEFAULT_DB_HOST = '47.97.213.134';
+const DEFAULT_DB_USER = 'baicy';
+const DEFAULT_DB_PASSWORD = 'baicy123';
 
 function getBaseConfig() {
   const port = Number.parseInt(process.env.DB_PORT || `${DEFAULT_PORT}`, 10);
@@ -24,10 +15,10 @@ function getBaseConfig() {
   );
 
   return {
-    host: getRequiredEnv('DB_HOST'),
+    host: process.env.DB_HOST || DEFAULT_DB_HOST,
     port: Number.isFinite(port) ? port : DEFAULT_PORT,
-    user: getRequiredEnv('DB_USER'),
-    password: getRequiredEnv('DB_PASSWORD'),
+    user: process.env.DB_USER || DEFAULT_DB_USER,
+    password: process.env.DB_PASSWORD || DEFAULT_DB_PASSWORD,
     charset: process.env.DB_CHARSET || DEFAULT_CHARSET,
     waitForConnections: true,
     connectionLimit: Number.isFinite(connectionLimit) ? connectionLimit : DEFAULT_CONNECTION_LIMIT,
