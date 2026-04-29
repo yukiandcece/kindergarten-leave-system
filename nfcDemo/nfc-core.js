@@ -102,6 +102,27 @@ export function readDataViewAsText(dataView, encoding = "utf-8") {
   return "[无法直接解码为文本]";
 }
 
+export function extractNfcIdFromText(text) {
+  if (typeof text !== "string") {
+    return "";
+  }
+
+  const trimmed = text.trim();
+
+  if (/^\d+_\d{7,15}$/.test(trimmed)) {
+    return trimmed;
+  }
+
+  const matched = trimmed.match(/\b\d+_\d{7,15}\b/);
+  return matched ? matched[0] : "";
+}
+
+function nfcIdFieldsFromText(text) {
+  const nfcId = extractNfcIdFromText(text);
+
+  return nfcId ? { nfc_id: nfcId } : {};
+}
+
 export function parseNdefRecord(record) {
   const base = {
     recordType: record.recordType,
@@ -132,31 +153,43 @@ export function parseNdefRecord(record) {
   }
 
   if (record.recordType === "text") {
+    const text = readDataViewAsText(record.data, record.encoding || "utf-8");
+
     return {
       ...base,
-      text: readDataViewAsText(record.data, record.encoding || "utf-8"),
+      text,
+      ...nfcIdFieldsFromText(text),
       encoding: record.encoding || "",
       lang: record.lang || "",
     };
   }
 
   if (record.recordType === "url" || record.recordType === "absolute-url") {
+    const url = readDataViewAsText(record.data);
+
     return {
       ...base,
-      url: readDataViewAsText(record.data),
+      url,
+      ...nfcIdFieldsFromText(url),
     };
   }
 
   if (record.mediaType) {
+    const text = readDataViewAsText(record.data);
+
     return {
       ...base,
-      text: readDataViewAsText(record.data),
+      text,
+      ...nfcIdFieldsFromText(text),
     };
   }
 
+  const rawText = readDataViewAsText(record.data);
+
   return {
     ...base,
-    rawText: readDataViewAsText(record.data),
+    rawText,
+    ...nfcIdFieldsFromText(rawText),
   };
 }
 
