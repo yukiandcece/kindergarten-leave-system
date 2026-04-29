@@ -48,15 +48,16 @@ async function handleNfcReading({ serialNumber, records }) {
   console.log('NFC读取成功:', { serialNumber, records });
 
   // 查找包含nfc_id的记录
-  const nfcRecord = records.find(r => r.nfc_id);
+  const currentRecords = Array.isArray(records) ? records : [];
+  const resolvedNfcId = extractNfcIdFromRecords(currentRecords);
 
-  if (!nfcRecord) {
+  if (!resolvedNfcId) {
     swipeTip.textContent = 'NFC卡格式错误：未找到nfc_id字段';
     swipeTip.style.color = '#eb4335';
     return;
   }
 
-  currentNfcId = nfcRecord.nfc_id;
+  currentNfcId = resolvedNfcId;
   searchInput.value = currentNfcId; // 立即显示nfc_id
 
   swipeTip.textContent = `NFC读取成功：${currentNfcId}，正在查询...`;
@@ -67,6 +68,100 @@ async function handleNfcReading({ serialNumber, records }) {
 }
 
 // NFC读取错误处理
+function extractNfcIdFromRecords(records) {
+  for (const record of records) {
+    const nfcId = extractNfcId(record);
+
+    if (nfcId) {
+      return nfcId;
+    }
+  }
+
+  return '';
+}
+
+function extractNfcId(value) {
+  if (value === null || value === undefined) {
+    return '';
+  }
+
+  if (typeof value === 'string') {
+    const text = value.trim();
+
+    if (/^\d+_\d{7,15}$/.test(text)) {
+      return text;
+    }
+
+    const matched = text.match(/\b\d+_\d{7,15}\b/);
+    if (matched) {
+      return matched[0];
+    }
+
+    try {
+      return extractNfcId(JSON.parse(text));
+    } catch {
+      return '';
+    }
+  }
+
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      const nfcId = extractNfcId(item);
+
+      if (nfcId) {
+        return nfcId;
+      }
+    }
+
+    return '';
+  }
+
+  if (typeof value === 'object') {
+    const direct = value.nfc_id || value.nfcId || value.text || value.rawText || value.url || value.rawJson;
+    const directNfcId = extractNfcId(direct);
+
+    if (directNfcId) {
+      return directNfcId;
+    }
+
+    if (typeof value.rawHex === 'string') {
+      const rawHexNfcId = extractNfcId(decodeRawHexText(value.rawHex));
+
+      if (rawHexNfcId) {
+        return rawHexNfcId;
+      }
+    }
+
+    for (const item of Object.values(value)) {
+      const nfcId = extractNfcId(item);
+
+      if (nfcId) {
+        return nfcId;
+      }
+    }
+  }
+
+  return '';
+}
+
+function decodeRawHexText(rawHex) {
+  const bytes = rawHex
+    .trim()
+    .split(/\s+/)
+    .map((part) => Number.parseInt(part, 16))
+    .filter((byte) => Number.isFinite(byte));
+
+  if (bytes.length === 0) {
+    return '';
+  }
+
+  try {
+    return new TextDecoder('utf-8').decode(new Uint8Array(bytes));
+  } catch {
+    return String.fromCharCode(...bytes);
+  }
+}
+
 function handleNfcReadingError(error) {
   console.error('NFC读取错误:', error);
   swipeTip.textContent = `NFC读取失败：${error.message}`;
