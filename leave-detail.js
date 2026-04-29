@@ -58,7 +58,7 @@ async function handleNfcReading({ serialNumber, records }) {
   }
 
   currentNfcId = resolvedNfcId;
-  searchInput.value = currentNfcId; // 立即显示nfc_id
+  searchInput.value = currentNfcId; // 先显示nfc_id，查询成功后再更新为学生姓名+nfc_id
 
   swipeTip.textContent = `NFC读取成功：${currentNfcId}，正在查询...`;
   swipeTip.style.color = '#2f63a2';
@@ -219,11 +219,8 @@ async function performNfcSearch(nfcId) {
     // 渲染带高亮的卡片
     renderCandidatesWithHighlight(candidates);
 
-    // 更新搜索输入框为 "{parent_name} + {nfc_id}"
-    const matchedContact = candidates.find(c => c.isMatch);
-    if (matchedContact && matchedContact.parent) {
-      searchInput.value = `${matchedContact.parent} + ${nfcId}`;
-    }
+    // 更新搜索输入框为 "{student_name} + {nfc_id}"
+    searchInput.value = `${studentData.student_name} + ${nfcId}`;
 
     const matchCount = candidates.filter(c => c.isMatch).length;
     swipeTip.textContent = `找到学生：${studentData.student_name}，${candidates.length}位接送人（${matchCount}位匹配）`;

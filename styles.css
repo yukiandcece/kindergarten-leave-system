@@ -528,13 +528,15 @@ input::placeholder {
 }
 
 .swipe-row {
-  display: grid;
-  grid-template-columns: 1fr 100px 130px;
+  display: flex;
   gap: 10px;
-  align-items: stretch;
+  align-items: center;
+  flex-wrap: nowrap;
 }
 
 .swipe-row input {
+  flex: 1 1 auto;
+  min-width: 0;
   height: 56px;
   font-size: 20px;
   text-align: left;
@@ -560,20 +562,36 @@ input::placeholder {
 }
 
 .swipe-row .get-code-btn {
-  height: 56px;
-  font-size: 18px;
-  white-space: nowrap;
-  padding: 0 12px;
-  border-radius: 12px;
+  flex: 0 0 auto;
 }
 
 .swipe-row .nfc-start-btn {
+  flex: 0 0 auto;
+}
+
+.swipe-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+.swipe-actions .get-code-btn,
+.swipe-actions .nfc-start-btn {
   height: 56px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+.swipe-actions .get-code-btn {
+  font-size: 18px;
+  padding: 0 12px;
+}
+
+.swipe-actions .nfc-start-btn {
   font-size: 16px;
   font-weight: 600;
-  white-space: nowrap;
   padding: 0 16px;
-  border-radius: 12px;
 }
 
 .swipe-tip {
@@ -646,7 +664,7 @@ input::placeholder {
 .pickup-list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  gap: 10px;
 }
 
 .pickup-card {
@@ -713,7 +731,7 @@ input::placeholder {
 .pickup-card p {
   margin: 3px 0 2px;
   color: #3e5366;
-  font-size: 12px;
+  font-size: 11px;
   line-height: 1.3;
 }
 
@@ -721,7 +739,7 @@ input::placeholder {
   color: #2d4a62;
   font-weight: 600;
   display: inline-block;
-  min-width: 65px;
+  min-width: 58px;
   text-align: justify;
   text-align-last: justify;
 }
@@ -732,7 +750,7 @@ input::placeholder {
   overflow: hidden;
   margin: 0 auto 6px;
   width: 100%;
-  max-width: 150px;
+  max-width: 112px;
   box-shadow: 0 2px 8px rgba(0, 67, 78, 0.12);
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -939,15 +957,19 @@ input::placeholder {
 
 .abnormal-list {
   margin: 10px 0 0;
+  padding-left: 20px;
   color: #566c81;
+  text-align: left;
 }
 
 .abnormal-list li {
   text-align: left;
+  line-height: 1.6;
 }
 
 .abnormal-list li:only-child {
   text-align: center;
+  padding-left: 0;
   padding: 20px 0;
   color: #5a6f85;
   list-style: none;
@@ -1195,7 +1217,6 @@ input::placeholder {
   }
 
   .swipe-row {
-    grid-template-columns: 1fr 90px 120px;
     gap: 8px;
   }
 
@@ -1214,13 +1235,17 @@ input::placeholder {
     text-overflow: ellipsis;
   }
 
-  .swipe-row .get-code-btn {
+  .swipe-actions {
+    gap: 8px;
+  }
+
+  .swipe-actions .get-code-btn {
     height: 50px;
     font-size: 16px;
     padding: 0 10px;
   }
 
-  .swipe-row .nfc-start-btn {
+  .swipe-actions .nfc-start-btn {
     height: 50px;
     font-size: 15px;
     padding: 0 14px;
@@ -1289,7 +1314,6 @@ input::placeholder {
   }
 
   .swipe-row {
-    grid-template-columns: 1fr;
     gap: 10px;
   }
 
@@ -1313,18 +1337,26 @@ input::placeholder {
     font-size: 11px;
   }
 
-  .swipe-row .get-code-btn,
-  .swipe-row .nfc-start-btn {
+  .swipe-actions {
+    gap: 8px;
+  }
+
+  .swipe-actions .get-code-btn,
+  .swipe-actions .nfc-start-btn {
     height: 48px;
     font-size: 15px;
     min-height: 48px;
-    width: 100%;
     padding: 0;
   }
 
-  .swipe-row .nfc-start-btn {
+  .swipe-actions .get-code-btn {
+    padding: 0 10px;
+  }
+
+  .swipe-actions .nfc-start-btn {
     font-size: 15px;
     font-weight: 600;
+    padding: 0 12px;
   }
 
   .get-code-btn {
@@ -1826,38 +1858,44 @@ input::placeholder {
   }
 
   .pickup-list {
-    grid-template-columns: 1fr;
-    gap: 10px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
   }
 
   .pickup-card {
-    padding: 10px;
+    padding: 8px 6px;
   }
 
   .pickup-card p {
-    font-size: 13px;
-    margin: 4px 0;
-    line-height: 1.5;
+    font-size: 10px;
+    margin: 3px 0;
+    line-height: 1.35;
   }
 
   .pickup-card p strong {
-    min-width: 75px;
-    font-size: 13px;
-    display: inline-block;
-    text-align: justify;
-    text-align-last: justify;
+    min-width: 0;
+    font-size: 10px;
+    display: block;
+    text-align: left;
+    text-align-last: auto;
+    margin-bottom: 2px;
   }
 
   .face-photo {
-    max-width: 100%;
-    margin-bottom: 8px;
+    max-width: 88px;
+    margin-bottom: 6px;
+  }
+
+  .match-badge {
+    padding: 3px 8px;
+    font-size: 10px;
   }
 
   .confirm-btn {
     width: 100%;
-    height: 36px;
-    font-size: 14px;
-    margin-top: 8px;
+    height: 30px;
+    font-size: 12px;
+    margin-top: 6px;
   }
 
   .student-select-item {
@@ -1878,20 +1916,22 @@ input::placeholder {
     font-size: 12px;
   }
 
-  .swipe-row .get-code-btn,
-  .swipe-row .nfc-start-btn {
+  .swipe-actions .get-code-btn,
+  .swipe-actions .nfc-start-btn {
     height: 46px;
     font-size: 14px;
     padding: 0;
   }
 
-  .swipe-row .nfc-start-btn {
+  .swipe-actions .nfc-start-btn {
     font-weight: 600;
     font-size: 14px;
+    padding: 0 10px;
   }
 
-  .swipe-row .get-code-btn {
+  .swipe-actions .get-code-btn {
     font-size: 16px;
+    padding: 0 8px;
   }
 }
 
