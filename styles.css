@@ -529,14 +529,13 @@ input::placeholder {
 
 .swipe-row {
   display: flex;
+  flex-direction: column;
   gap: 10px;
-  align-items: center;
-  flex-wrap: nowrap;
+  align-items: stretch;
 }
 
 .swipe-row input {
-  flex: 1 1 auto;
-  min-width: 0;
+  width: 100%;
   height: 56px;
   font-size: 20px;
   text-align: left;
@@ -573,7 +572,8 @@ input::placeholder {
   display: flex;
   gap: 10px;
   align-items: center;
-  flex: 0 0 auto;
+  justify-content: flex-end;
+  width: 100%;
 }
 
 .swipe-actions .get-code-btn,
@@ -1339,6 +1339,11 @@ input::placeholder {
 
   .swipe-actions {
     gap: 8px;
+  }
+
+  .swipe-actions .get-code-btn,
+  .swipe-actions .nfc-start-btn {
+    flex: 1 1 0;
   }
 
   .swipe-actions .get-code-btn,
