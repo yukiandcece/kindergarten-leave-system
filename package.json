@@ -8,7 +8,7 @@
     "build": "echo 'Build process would be configured here'",
     "lint": "eslint src/**/*.js",
     "format": "prettier --write \"src/**/*.{js,css,html}\"",
-    "test": "echo 'Tests would be configured here'"
+    "test": "node tests/nfc-core.test.mjs"
   },
   "keywords": [
     "kindergarten",
